@@ -14,7 +14,6 @@
       "description": "Keep Alpine on stable releases only",
       "matchDatasources": ["docker"],
       "matchPackageNames": ["alpine"],
-      "versioning": "docker",
       "matchUpdateTypes": ["patch", "minor", "major"],
       "groupName": "alpine-base-image",
       "labels": ["dependencies", "docker", "alpine"],
