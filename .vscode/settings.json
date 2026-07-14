@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cd /workspaces/alpine-rsync && python -m json\\.tool renovate\\.json > /dev/null && echo 'renovate\\.json is valid JSON'$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
