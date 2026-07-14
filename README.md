@@ -1,5 +1,7 @@
 # alpine-rsync
 
+[![Build and Push Rsync Image](https://github.com/dominik-ba/alpine-rsync/actions/workflows/build-image.yml/badge.svg)](https://github.com/dominik-ba/alpine-rsync/actions/workflows/build-image.yml)
+
 A minimal Docker image based on Alpine Linux with `rsync` installed.
 
 ## Overview
