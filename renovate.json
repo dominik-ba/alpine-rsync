@@ -11,12 +11,11 @@
   "prConcurrentLimit": 5,
   "packageRules": [
     {
-      "description": "Keep the Alpine base image on the latest stable release, excluding pre-releases",
+      "description": "Keep Alpine on stable releases only",
       "matchDatasources": ["docker"],
       "matchPackageNames": ["alpine"],
       "versioning": "docker",
       "matchUpdateTypes": ["patch", "minor", "major"],
-      "allowedVersions": "/^(?!.*(alpha|beta|rc|preview|dev|edge)).*$/",
       "groupName": "alpine-base-image",
       "labels": ["dependencies", "docker", "alpine"],
       "commitMessageTopic": "Alpine base image"
