@@ -35,7 +35,7 @@ jobs:
         run: echo "tag=$(date +'%Y.%m.%d')-${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: ./image
           push: true
