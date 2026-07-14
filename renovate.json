@@ -1,6 +1,91 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":automergeDigest"
+  ],
+  "labels": ["dependencies"],
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5,
+  "packageRules": [
+    {
+      "description": "Keep the Alpine base image on the latest stable release, excluding pre-releases",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["alpine"],
+      "versioning": "docker",
+      "matchUpdateTypes": ["patch", "minor", "major"],
+      "allowedVersions": "/^(?!.*(alpha|beta|rc|preview|dev|edge)).*$/",
+      "groupName": "alpine-base-image",
+      "labels": ["dependencies", "docker", "alpine"],
+      "commitMessageTopic": "Alpine base image"
+    },
+    {
+      "description": "Auto-merge Alpine patch updates after a short waiting period",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["alpine"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "minimumReleaseAge": "3 days",
+      "labels": ["dependencies", "docker", "alpine"]
+    },
+    {
+      "description": "Auto-merge Alpine minor updates after a longer waiting period",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["alpine"],
+      "matchUpdateTypes": ["minor"],
+      "automerge": true,
+      "automergeType": "pr",
+      "minimumReleaseAge": "7 days",
+      "labels": ["dependencies", "docker", "alpine"]
+    },
+    {
+      "description": "Require manual approval for Alpine major updates",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["alpine"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "docker", "alpine", "manual-review"]
+    },
+    {
+      "description": "Auto-merge safe GitHub Actions patch updates after a short waiting period",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "minimumReleaseAge": "3 days",
+      "labels": ["dependencies", "github-actions"]
+    },
+    {
+      "description": "Auto-merge GitHub Actions minor updates after a longer waiting period",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor"],
+      "automerge": true,
+      "automergeType": "pr",
+      "minimumReleaseAge": "7 days",
+      "labels": ["dependencies", "github-actions"]
+    },
+    {
+      "description": "Require manual approval for GitHub Actions major updates",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "github-actions", "manual-review"]
+    }
+  ],
+  "regexManagers": [
+    {
+      "description": "Update the Alpine tag in image/Dockerfile",
+      "customType": "regex",
+      "fileMatch": ["^image/Dockerfile$"],
+      "matchStrings": [
+        "ARG\\s+TAG=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "alpine",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    }
   ]
 }
