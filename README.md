@@ -49,6 +49,14 @@ Run the container and verify `rsync` is available:
 docker run --rm ghcr.io/dominik-ba/alpine-rsync:latest rsync --version
 ```
 
+For Raspberry Pi devices, pull the ARM-compatible image explicitly:
+
+```bash
+docker pull --platform linux/arm64 ghcr.io/dominik-ba/alpine-rsync:latest
+```
+
+If your Pi uses a 32-bit OS, replace `linux/arm64` with `linux/arm/v7`.
+
 ## Example usage
 
 Use `rsync` from the image for local or remote synchronization:
